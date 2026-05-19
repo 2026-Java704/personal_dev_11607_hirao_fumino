@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>トップページ/レシピ一覧画面</title>
+</head>
+<body>
+	<h1>レシピ検索サイト</h1>
+	
+	<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワード">
+	<button>検索</button>
+	<button>投稿</button>	
+	
+	<a th:each="category:${categories}"
+			       th:href="@{/recipes(categoryId=${category.id})}"
+			       th:text="${category.name}"
+			       style="margin-right: 5px;"></a>
+				  
+	
+	
+
+</body>
+</html>
