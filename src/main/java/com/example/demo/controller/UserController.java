@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,14 @@ import com.example.demo.model.Account;
 import com.example.demo.repository.UserRepository;
 
 @Controller
-public class AccountController {
+public class UserController {
 
 	private final HttpSession session;
 	private final Account account;
-	private final UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-	public AccountController(
+	public UserController(
 			HttpSession session,
 			Account account,
 			UserRepository userRepository) {
@@ -60,7 +62,7 @@ public class AccountController {
 		}
 		User user = userList.get(0);
 
-		// セッション管理されたアカウント情報にemailをセット
+		//		// セッション管理されたアカウント情報にemailをセット
 		account.setEmail(user.getEmail());
 
 		// 「/recipes」へのリダイレクト
@@ -76,12 +78,17 @@ public class AccountController {
 	//新規会員登録を実行
 	@PostMapping("/users/add")
 	public String store(
+			@RequestParam String name,
 			@RequestParam String email,
 			@RequestParam String password,
 			Model model) {
 
 		List<String> errorList = new ArrayList<>();
 
+		//名前が空の場合エラー
+		if (name.length() == 0) {
+			errorList.add("名前は必須です");
+		}
 		//メールアドレスが空の場合エラー
 		if (email.length() == 0) {
 			errorList.add("メールアドレスは必須です");
@@ -92,16 +99,17 @@ public class AccountController {
 			//登録済みメールアドレスの場合エラー
 		}
 		List<User> userList = userRepository.findByEmail(email);
-		if (userList.size() > 0) {
+		if (userList != null && userList.size() > 0) {
 			errorList.add("登録済みのメールアドレスです");
 		}
 		if (errorList.size() > 0) {
 			model.addAttribute("errorList", errorList);
+			model.addAttribute("name", name);
 			model.addAttribute("email", email);
 			model.addAttribute("password", password);
 			return "AccountForm";
 		}
-		User user = new User(email, password);
+		User user = new User(name, email, password);
 		userRepository.save(user);
 
 		return "redirect:/login";

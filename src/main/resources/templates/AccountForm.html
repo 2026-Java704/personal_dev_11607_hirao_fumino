@@ -8,13 +8,13 @@
 	<main>
 			<h3>新規会員登録</h3>
 			
-			<form action="/users/new" method="post">
+			<form action="/users/add" method="post">
 				
 				<ul th:if="${errorList}" class="error"> 
 					<li th:each="error:${errorList}" th:text="${error}"></li>
 				</ul>
-				
-				<input type="text" name="email" placeholder="メールアドレス">
+				<input type="text" name="name" placeholder="名前">
+				<br><input type="text" name="email" placeholder="メールアドレス">
 				<br><input type="text" name="password" placeholder="パスワード">	
 				<br> <span th:text="${message}" style="color: red"></span>
 				
