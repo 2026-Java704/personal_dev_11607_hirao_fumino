@@ -29,6 +29,7 @@ public class RecipeController {
 	@GetMapping("/recipes")
 	public String index(
 			@RequestParam(defaultValue = "") Integer categoryId,
+			@RequestParam(defaultValue = "") String keyword,
 			Model model) {
 
 		// 全カテゴリー一覧を取得
@@ -37,17 +38,26 @@ public class RecipeController {
 
 		// 商品一覧情報の取得
 		List<Recipe> recipeList = null;
-		if (categoryId == null) {
-			recipeList = recipeRepository.findAll();
-		} else {
 
+		//キーワード検索
+		if (keyword.length() > 0) {
+			recipeList = recipeRepository.findByNameContaining(keyword);
+		}
+		//カテゴリーIdを指定して一覧を取得
+		else if (categoryId != null) {
 			recipeList = recipeRepository.findByCategoryId(categoryId);
+		} else {
+			//全商品一覧
+			recipeList = recipeRepository.findAll();
+
+			model.addAttribute("keyword", keyword);
 			model.addAttribute("recipes", recipeList);
 
 		}
-		return "recipes";
-	}
 
+		return "recipes";
+
+	}
 }
 
 //	//商品詳細画面

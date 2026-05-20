@@ -8,18 +8,33 @@
 	<h1>レシピ投稿サイト</h1>
 	
 	<main>
-	
+		
+	<form action="/recipes" method="get">
 	<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワード">
-	<button>検索</button>
-	<button>投稿</button>	
+	<button>検索</button><button>投稿</button>
 	</form>
+	
+	<br><a href="/recipes">全てのレシピ</a>
 	<a th:each="category:${categories}"
 			       th:href="@{/recipes(categoryId=${category.id})}"
 			       th:text="${category.name}"
 			       style="margin-right: 5px;"></a>
-				  
-	
-	</main>
+				   
+		<table>
+		    <tr>		   						
+		    <th>No</th>
+			<th></th>
+			</tr>
+			<tr th:each="recipe:${recipes}">
+			<td th:text="${recipe.id}"></td>
+			<td>
+			<a th:href="'/recipes/detail'+${recipe.id}" th:text="$recipe.name}"></a>
+		    </td>
+			</tr>
+	     </table>		   
 
+	</main>
+	
+	
 </body>
 </html>
