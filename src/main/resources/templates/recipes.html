@@ -5,19 +5,21 @@
 <title>トップページ/レシピ一覧画面</title>
 </head>
 <body>
-	<h1>レシピ検索サイト</h1>
+	<h1>レシピ投稿サイト</h1>
+	
+	<main>
 	
 	<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワード">
 	<button>検索</button>
 	<button>投稿</button>	
-	
+	</form>
 	<a th:each="category:${categories}"
 			       th:href="@{/recipes(categoryId=${category.id})}"
 			       th:text="${category.name}"
 			       style="margin-right: 5px;"></a>
 				  
 	
-	
+	</main>
 
 </body>
 </html>

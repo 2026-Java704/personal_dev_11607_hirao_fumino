@@ -4,13 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RecipeRepository extends JpaRepository<Recipe, Integer>
+import com.example.demo.entity.Recipe;
 
-List<Recipe> findByCategoryId(Integer categoryId);
+public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
-List<Recipe> findByNameContaining(String keyword);
+	List<Recipe> findByCategoryId(Integer categoryId);
 
-List<Recipe> findByNameContainingAndPriceLessThanEqual(String keyword, Integer maxPrice);
 }
-
-

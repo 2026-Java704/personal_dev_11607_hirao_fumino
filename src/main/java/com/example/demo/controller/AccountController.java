@@ -61,7 +61,6 @@ public class AccountController {
 		User user = userList.get(0);
 
 		// セッション管理されたアカウント情報にemailをセット
-		//		account.setId(user.getId());
 		account.setEmail(user.getEmail());
 
 		// 「/recipes」へのリダイレクト
