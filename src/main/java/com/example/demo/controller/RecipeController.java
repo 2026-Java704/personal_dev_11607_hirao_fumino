@@ -60,7 +60,7 @@ public class RecipeController {
 
 	}
 
-	//レシピ詳細画面
+	//レシピ詳細画面を表示
 	@GetMapping("/recipes/detail/{id}")
 	public String detail(
 			@PathVariable Integer id,

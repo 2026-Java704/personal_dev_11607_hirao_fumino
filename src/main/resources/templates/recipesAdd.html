@@ -3,35 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>投稿</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
 	<header th:replace="~{header}"></header>
 	<hr>
 	
 	<main>
-	<form action="/recipes/add" method="post">
+	<form action="/recipes/add" th:object="${recipe}" method="post">
 		
 		<input type="text" name="name" placeholder="レシピ名"><br>
 		
+		<div>
 		<select name="categoryId" id="category">
 	    <option value="">カテゴリー選択</option>
+		<option th:each="catgory : ${categories}" 
+		                        th:value="${category.id}" 
+		                        th:text="${category.name}"></option>
 		</select>
+		</div>
 		
 		<br><textarea name="recipe" placeholder="作り方"></textarea><br>
 		
 	    <button type="submit">レシピを投稿する</button><br>
 	    <a href="/recipes">キャンセル</a>
 			        
-
-		
-		
-		 
-		               
-
-		
 	</form>
-
     </main>
+	<hr>
+		<footer th:replace="~{footer}"></footer>
 </body>
 </html>

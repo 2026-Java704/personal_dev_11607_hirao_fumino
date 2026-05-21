@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>レシピ詳細</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
 	<header th:replace="~{header}"></header>
@@ -17,11 +17,16 @@
 		<hr>
 		
 		<h2 th:text="${recipe.name}"></h2>
-		<h3>材料</h3>
+		
 		<h3>作り方</h3>
+		<div style="white-space: pre-wrap;" th:text="${recipe.recipe}"></div>
+		
+
 
 		
 	</main>
+	<hr>
+		<footer th:replace="~{footer}"></footer>
 
 </body>
 </html>

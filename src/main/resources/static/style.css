@@ -9,7 +9,7 @@ body {
 /*ヘッダー、フッター*/
 header, footer {
 	background-color:ivory  /*背景色*/
-	color rgb(62, 253, 86); /*文字色*/
+	color rgb(108, 247, 68); /*文字色*/
     padding-top: 5px; /*内側余白(上)*/
 	padding-bottom: 5px; /*内側余白(下)*/
 }
