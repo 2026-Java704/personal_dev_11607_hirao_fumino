@@ -58,7 +58,7 @@ public class RecipeController {
 
 	}
 
-	//商品詳細画面
+	//レシピ詳細画面
 	@GetMapping("/recipes/detail/{id}")
 	public String detail(
 			@PathVariable Integer id,
@@ -69,4 +69,14 @@ public class RecipeController {
 
 		return "recipesDetail";
 	}
+
+	//レシピ投稿画面を表示
+	@GetMapping("/recipes/add")
+	public String create(
+			@RequestParam(defaultValue = "") Integer userId,
+			@RequestParam(defaultValue = "") Integer categoryId,
+			@RequestParam(defaultValue = "") String name,
+			@RequestParam(defaultValue = "") String recipeDetail,
+			Model model);
+
 }

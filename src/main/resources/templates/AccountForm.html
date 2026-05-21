@@ -10,9 +10,9 @@
 			
 			<form action="/users/add" method="post">
 				
-				<ul th:if="${errorList}" class="error"> 
-					<li th:each="error:${errorList}" th:text="${error}"></li>
-				</ul>
+				<a th:if="${errorList}" class="error"> 
+					<a th:each="error:${errorList}" th:text="${error}"></a>
+				</a>
 				<input type="text" name="name" placeholder="名前">
 				<br><input type="text" name="email" placeholder="メールアドレス">
 				<br><input type="text" name="password" placeholder="パスワード">	
