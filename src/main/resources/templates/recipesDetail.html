@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>レシピ詳細</title>
+</head>
+<body>
+	<h1>レシピ投稿サイト</h1>
+	
+	<brmain>
+		<form action="/recipes" method="get">
+					<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワードを入力">
+					<button type="submit">検索</button>
+					<a href="/recipes/new"><button type="button">レシピを投稿する</button></a>
+				</form>
+		<hr>
+		
+		<a th:text="${recipe.name}"></a>
+				
+		
+	</main>
+
+</body>
+</html>

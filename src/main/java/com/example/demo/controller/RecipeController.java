@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Category;
@@ -45,29 +46,27 @@ public class RecipeController {
 		}
 		//カテゴリーIdを指定して一覧を取得
 		else if (categoryId != null) {
-			recipeList = recipeRepository.findByCategoryId(categoryId);
+			recipeList = recipeRepository.findByCategory_Id(categoryId);
 		} else {
 			//全商品一覧
 			recipeList = recipeRepository.findAll();
-
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("recipes", recipeList);
-
 		}
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("recipes", recipeList);
 
 		return "recipes";
 
 	}
-}
 
-//	//商品詳細画面
-//	@GetMapping("/items/{id}")
-//	public String show(
-//			@PathVariable Integer id,
-//			Model model) {
-//		//主キー検索
-//		Recipe recipe = recipeRepository.findById(id).get();
-//		model.addAttribute("recipe", recipe);
-//
-//		return "recipeDetail";
-//	}
+	//商品詳細画面
+	@GetMapping("/recipes/detail/{id}")
+	public String detail(
+			@PathVariable Integer id,
+			Model model) {
+		//主キー検索
+		Recipe recipe = recipeRepository.findById(id).get();
+		model.addAttribute("recipe", recipe);
+
+		return "recipesDetail";
+	}
+}

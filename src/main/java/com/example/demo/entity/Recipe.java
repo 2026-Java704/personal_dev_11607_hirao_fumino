@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,20 +11,22 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "recipes")
 public class Recipe {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "user_id")
-	private Integer userId; // ユーザーID
+	private Integer userId;
+
+	private String name;
+
+	private String recipe;
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")
-	private Category category; //カテゴリーID
+	private Category category;
 
-	private String name; // レシピ名
-
-	private String recipes; //レシピ
+	//ゲッターとセッター
 
 	public Integer getId() {
 		return id;
@@ -59,12 +60,11 @@ public class Recipe {
 		this.name = name;
 	}
 
-	public String getRecipes() {
-		return recipes;
+	public String getRecipe() {
+		return recipe;
 	}
 
-	public void setRecipes(String recipes) {
-		this.recipes = recipes;
+	public void setRecipe(String recipe) {
+		this.recipe = recipe;
 	}
-
 }

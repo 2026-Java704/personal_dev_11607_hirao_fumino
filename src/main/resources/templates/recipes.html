@@ -1,40 +1,45 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>トップページ/レシピ一覧画面</title>
+    <meta charset="UTF-8">
+    <title>トップページ/レシピ一覧</title>
 </head>
 <body>
 	<h1>レシピ投稿サイト</h1>
 	
 	<main>
+		<form action="/recipes" method="get">
+			<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワードを入力">
+			<button type="submit">検索</button>
+			<a href="/recipes/new"><button type="button">レシピを投稿する</button></a>
+		</form>
 		
-	<form action="/recipes" method="get">
-	<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワード">
-	<button>検索</button><button>投稿</button>
-	</form>
-	
-	<br><a href="/recipes">全てのレシピ</a>
-	<a th:each="category:${categories}"
-			       th:href="@{/recipes(categoryId=${category.id})}"
-			       th:text="${category.name}"
-			       style="margin-right: 5px;"></a>
-				   
-		<table>
-		    <tr>		   						
-		    <th>No</th>
-			<th></th>
-			</tr>
-			<tr th:each="recipe:${recipes}">
-			<td th:text="${recipe.id}"></td>
-			<td>
-			<a th:href="'/recipes/detail'+${recipe.id}" th:text="$recipe.name}"></a>
-		    </td>
-			</tr>
-	     </table>		   
+		<br>
+		<a href="/recipes">全てのレシピ</a>  
+		<a th:each="category : ${categories}"
+		   th:href="@{/recipes(categoryId=${category.id})}"
+		   th:text="${category.name}"
+		   style="margin-right: 10px;"></a>
+		
+		<br><br>
+		<hr>
+		
+		<h2>レシピ一覧</h2>
+		
+		<p th:if="${#lists.isEmpty(recipes)}">レシピがまだありません。</p>
+		
+		<div th:each="recipe : ${recipes}" style="margin-bottom: 15px;">
+			<span>
+				[<span th:text="${recipe.category != null ? recipe.category.name : '未分類'}">カテゴリー</span>]
+			</span>
+			
+			<a th:href="@{/recipes/detail/{id}(id=${recipe.id})}" 
+			   th:text="${recipe.name}" 
+			   style="font-size: 1.2em; font-weight: bold;">レシピ名</a>
+			   
+		</div>
 
 	</main>
-	
-	
 </body>
 </html>
