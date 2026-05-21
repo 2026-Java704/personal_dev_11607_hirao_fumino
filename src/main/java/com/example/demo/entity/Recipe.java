@@ -18,9 +18,9 @@ public class Recipe {
 
 	private Integer userId;
 
-	private String name;
+	private String name; //料理名
 
-	private String recipe;
+	private String recipe; //レシピ詳細
 
 	@ManyToOne
 	@JoinColumn(name = "category_id")

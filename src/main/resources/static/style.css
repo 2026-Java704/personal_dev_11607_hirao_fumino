@@ -1,0 +1,50 @@
+
+
+/*全体*/
+body {
+	background-color:ivory; /*背景色*/
+	text-align: center; /*中央よせ*/
+}
+
+/*ヘッダー、フッター*/
+header, footer {
+	background-color:ivory  /*背景色*/
+	color rgb(62, 253, 86); /*文字色*/
+    padding-top: 5px; /*内側余白(上)*/
+	padding-bottom: 5px; /*内側余白(下)*/
+}
+
+/*ヘッダー内リンク*/
+header a {
+	color: #ffffff;
+}
+
+/*ヘッダー内見出し*/
+header h1 {
+	font-size: 20pt;
+	margin: 10px auto;
+}
+
+/* メイン */
+main {
+	background-color: #FFFFFF;
+	min-height: 50px;
+	padding: 20px;
+}
+
+/* 送信ボタン */
+button {
+	margin: 2px;
+	padding: 5px 20px;
+	background-color: #e5857b;
+	color: #ffffff;
+	border: none;
+	width:150px;
+	cursor: pointer;
+}
+/* 送信ボタン(マウスオーバー時) */
+button:hover {
+	background-color: #f1b2b2;
+}
+
+

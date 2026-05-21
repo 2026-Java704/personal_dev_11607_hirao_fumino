@@ -34,7 +34,7 @@ public class UserController {
 	}
 
 	// ログイン画面を表示
-	@GetMapping({ "/", "/login" })
+	@GetMapping({ "/", "/login", "/logout" })
 	public String index() {
 		// セッション情報を全てクリアする
 		session.invalidate();

@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>トップページ/レシピ一覧</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<h1>レシピ投稿サイト</h1>
+	
+	<header th:replace="~{header}"></header>
 	
 	<main>
 		<form action="/recipes" method="get">
@@ -39,5 +41,7 @@
 		</div>
 
 	</main>
+	<hr>
+	<footer th:replace="~{footer}"></footer>
 </body>
 </html>

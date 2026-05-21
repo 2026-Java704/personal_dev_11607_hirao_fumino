@@ -3,15 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <title>投稿</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<h1>レシピ投稿サイト</h1>
+	<header th:replace="~{header}"></header>
+	<hr>
 	
 	<main>
 	<form action="/recipes/add" method="post">
 		
-		<input type="text" name="name" placeholder="レシピ名">
-		<br><input type="text" name="recipedetail" placeholder="作り方">
+		<input type="text" name="name" placeholder="レシピ名"><br>
+		
+		<select name="categoryId" id="category">
+	    <option value="">カテゴリー選択</option>
+		</select>
+		
+		<br><textarea name="recipe" placeholder="作り方"></textarea><br>
+		
+	    <button type="submit">レシピを投稿する</button><br>
+	    <a href="/recipes">キャンセル</a>
+			        
+
+		
+		
+		 
+		               
+
 		
 	</form>
 
