@@ -38,14 +38,23 @@
 		   th:text="${category.name}"
 		   style="margin-right: 10px;"></a>
 		
-<!--		   <ol class="category-001">-->
-<!--		       <li><a href="/recipes">全てのレシピ</a></li>-->
-<!--		       <li><a href="@{/recipes(categoryId=${category.id})}"-->
-<!--				      th:text="${category.name}"-->
-<!--				      style="margin-right: 10px;"></a></li>-->
-		       
-		   </ol>
-		   
+<!--		   <div class="tab-3">-->
+<!--		       <label>-->
+<!--		           <input type="radio" name="tab-3" checked>-->
+<!--				   <a href="/recipes">全てのレシピ</a> -->
+<!--		       </label>-->
+<!--		       <div>-->
+<!--		       </div>-->
+
+<!--		       <label>-->
+<!--		           <input type="radio" name="tab-3">-->
+<!--				   <a th:each="category : ${categories}"-->
+<!--				   		   th:href="@{/recipes(categoryId=${category.id})}"-->
+<!--				   		   th:text="${category.name}"-->
+<!--				   		   style="margin-right: 10px;"></a>-->
+<!--		       </label>-->
+<!--		       <div></div>-->
+
 		<br><br>
 		<hr>
 		

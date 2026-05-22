@@ -8,6 +8,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import org.springframework.core.type.filter.AbstractClassTestingTypeFilter;
+
 @Entity
 @Table(name = "recipes")
 public class Recipe {
@@ -22,6 +24,8 @@ public class Recipe {
 
 	private String recipe; //レシピ詳細
 
+//	private String message; //コメント
+
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
@@ -35,6 +39,10 @@ public class Recipe {
 		this.name = name;
 		this.recipe = recipe;
 	}
+
+//	public Recipe(String message) {
+//		this.message = message;
+//	}
 
 	//ゲッターとセッター
 
@@ -77,4 +85,12 @@ public class Recipe {
 	public void setRecipe(String recipe) {
 		this.recipe = recipe;
 	}
+	
+//	public String getMessage() {
+//		return message;
+//	}
+//	
+//	public void setMessage(String message) {
+//		this.message = message;
+//	}
 }

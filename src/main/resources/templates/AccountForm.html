@@ -6,8 +6,14 @@
 <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-	<main>
-			<h3>新規会員登録</h3>
+	
+	    <div class="addheader">
+		<h1><a href="/recipes">レシピ投稿サイト</a></h1>
+		</div>
+		<hr>
+		
+		<main>
+			<br><h3>新規会員登録</h3>
 			
 			<form action="/users/add" method="post">
 				
@@ -19,7 +25,11 @@
 				<br><input type="text" name="password" placeholder="パスワード">	
 				<br> <span th:text="${message}" style="color: red"></span>
 				
+			<br>
 			<button>登録</button>
+			
+			<br><a href="/login">キャンセル</a>
+			
 		    </form>
 			
 			

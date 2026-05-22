@@ -23,16 +23,25 @@
 		<hr>
 		
 		<h2 th:text="${recipe.name}"></h2>
+		<a th:text="${@account.name}+'さんのレシピ'"></a>
 		
 <!--		<h3>作り方</h3>-->
 <!--		<div style="white-space: pre-wrap;" th:text="${recipe.recipe}"></div>-->
-		
+		<br><br>
 		<div class="box-009">
 		    <div>
 		        作り方・手順
 		    </div>
 			<p style="white-space: pre-wrap;" th:text="${recipe.recipe}"></p>
 		</div>
+		
+		<p>みんなのコメント</p>
+		<form>
+		<div class="balloon-004">
+<!--		    <input type="text" name="message" th:value="${message}" placeholder="コメント">-->
+		</div>
+		<button>コメントする</button>
+		</form>
 		
 	</main>
 	<hr>

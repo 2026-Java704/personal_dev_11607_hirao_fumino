@@ -15,11 +15,14 @@ import com.example.demo.entity.Recipe;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.RecipeRepository;
 
+import net.bytebuddy.asm.Advice.Return;
+
 @Controller
 public class RecipeController {
 
 	private final CategoryRepository categoryRepository;
 	private final RecipeRepository recipeRepository;
+	private String message;
 
 	public RecipeController(
 			CategoryRepository categoryRepository,
@@ -72,6 +75,18 @@ public class RecipeController {
 		return "recipesDetail";
 	}
 
+	//レシピ詳細画面からコメントする
+//	@PostMapping("/recipes/detail/{id}")
+//	public String comment(
+//			@RequestParam String message,
+//			Model model) {
+//
+//		model.addAttribute("message", message);
+//	
+//	return "redirect:/recipes/Detail";
+//	
+//}
+	
 	//レシピ投稿画面を表示
 	@GetMapping("/recipes/add")
 	public String create() {
@@ -114,3 +129,4 @@ public class RecipeController {
 	}
 
 }
+
