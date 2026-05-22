@@ -6,7 +6,7 @@ INSERT INTO users(name, email, password) VALUES('大谷翔平', '	ohtani@major.c
 INSERT INTO users(name, email, password) VALUES('イーロン・マスク', 'eron@tesra.com', 'spacex123');
 INSERT INTO users(name, email, password) VALUES('ビル・ゲイツ', ' bill@rich.com', 'microsoft456');
 INSERT INTO users(name, email, password) VALUES('スティーブ・ジョブズ', 'steve@tensai.com', 'apple789');
-
+INSERT INTO users(name, email, password) VALUES('平尾文乃', 'hirao@aaa.com', 'himitu');
 
 -- カテゴリーテーブル --
 INSERT INTO categories(name) VALUES('丼もの');

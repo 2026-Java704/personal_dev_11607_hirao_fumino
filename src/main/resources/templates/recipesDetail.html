@@ -8,21 +8,31 @@
 <body>
 	<header th:replace="~{header}"></header>
 	
-	<brmain>
-		<form action="/recipes" method="get">
-					<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワードを入力">
-					<button type="submit">検索</button>
-					<a href="/recipes/add"><button type="button">レシピを投稿する</button></a>
-				</form>
+	  <main>
+		<form action="/recipes" class="search-form-3" method="get">
+			<label>
+			<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワード検索">
+			</label>
+			<button type="submit" aria-label="検索"></button>
+		</form>
+				
+		<form>
+		    <a href="/recipes/add"><button type="button" class="button-61">レシピを投稿する</button></a>
+		</form>
+		
 		<hr>
 		
 		<h2 th:text="${recipe.name}"></h2>
 		
-		<h3>作り方</h3>
-		<div style="white-space: pre-wrap;" th:text="${recipe.recipe}"></div>
+<!--		<h3>作り方</h3>-->
+<!--		<div style="white-space: pre-wrap;" th:text="${recipe.recipe}"></div>-->
 		
-
-
+		<div class="box-009">
+		    <div>
+		        作り方・手順
+		    </div>
+			<p style="white-space: pre-wrap;" th:text="${recipe.recipe}"></p>
+		</div>
 		
 	</main>
 	<hr>

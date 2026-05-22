@@ -26,6 +26,16 @@ public class Recipe {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
+	//コンストラクタ
+	public Recipe() {
+
+	}
+
+	public Recipe(String name, String recipe) {
+		this.name = name;
+		this.recipe = recipe;
+	}
+
 	//ゲッターとセッター
 
 	public Integer getId() {

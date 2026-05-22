@@ -12,20 +12,45 @@
 	<main>
 	<form action="/recipes/add" th:object="${recipe}" method="post">
 		
-		<input type="text" name="name" placeholder="レシピ名"><br>
+<!--		<input type="text" name="name" placeholder="レシピ名"><br>-->
 		
-		<div>
-		<select name="categoryId" id="category">
-	    <option value="">カテゴリー選択</option>
-		<option th:each="catgory : ${categories}" 
-		                        th:value="${category.id}" 
-		                        th:text="${category.name}"></option>
-		</select>
-		</div>
+		<label>
+		    <span class="textbox-2-label">
+		    <input type="text" name="name" class="textbox-2" placeholder="レシピ名"/>
+		    </span>
+		</label>
 		
-		<br><textarea name="recipe" placeholder="作り方"></textarea><br>
+<!--		<div>-->
+<!--		<select name="categoryId" id="category">-->
+<!--	    <option value="">カテゴリー選択</option>-->
+<!--		<option th:each="catgory : ${categories}" -->
+<!--		                        th:value="${category.id}" -->
+<!--		                        th:text="${category.name}"></option>-->
+<!--		</select>-->
+<!--		</div>-->
 		
-	    <button type="submit">レシピを投稿する</button><br>
+        <label class="selectbox-3">
+            <select name="categoryId" id="category">
+              <option value="">カテゴリー選択</option>
+              <option th:each="catgory : ${categories}"
+			          th:value="${category.id}"
+					  th:text="${category.name}">
+		      </option>
+            </select>
+        </label>
+		
+<!--		<br><textarea name="recipe" placeholder="作り方"></textarea><br>-->
+		
+		<label>
+		    <span class="textbox-2-label">
+		    <textarea name="recipe" class="textbox-2" placeholder="作り方・手順"></textarea>
+		    </span>
+		</label>
+		
+<!--	    <button type="submit">レシピを投稿する</button><br>-->
+		
+		<button type="submit" class="button-61">レシピを投稿する</button>
+		
 	    <a href="/recipes">キャンセル</a>
 			        
 	</form>

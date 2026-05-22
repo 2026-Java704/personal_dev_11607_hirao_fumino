@@ -87,7 +87,7 @@ public class RecipeController {
 
 		List<String> errorList = new ArrayList<>();
 
-		//レシピ名が空の売エラー
+		//レシピ名が空の場合エラー
 		if (name.length() == 0) {
 			errorList.add("レシピ名を入力して下さい");
 		}
@@ -102,7 +102,15 @@ public class RecipeController {
 
 			return "recipesAdd";
 		}
+		Recipe recipes = new Recipe(name, recipe);
+
+		recipes.setName(recipes.getName());
+		recipes.setRecipe(recipes.getRecipe());
+
+		recipeRepository.save(recipes);
+
 		return "redirect:/recipes";
 
 	}
+
 }

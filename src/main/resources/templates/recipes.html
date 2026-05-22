@@ -11,10 +11,24 @@
 	<header th:replace="~{header}"></header>
 	
 	<main>
-		<form action="/recipes" method="get">
-			<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワードを入力">
-			<button type="submit">検索</button>
-			<a href="/recipes/add"><button type="button">レシピを投稿する</button></a>
+<!--		<form action="/recipes" method="get">-->
+<!--			<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワードを入力">-->
+<!--			<button type="submit">検索</button>-->
+<!--		</form>-->
+		
+		<form action="/recipes" class="search-form-3" method="get">
+		    <label>
+		        <input type="text" name="keyword" th:value="${keyword}" placeholder="キーワード検索">
+		    </label>
+		    <button type="submit" aria-label="検索"></button>
+		</form>
+		
+<!--		<form>-->
+<!--		<a href="/recipes/add"><button type="button">レシピを投稿する</button></a>-->
+<!--		</form>-->
+
+        <form>
+           <a href="/recipes/add"><button type="button" class="button-61">レシピを投稿する</button></a>
 		</form>
 		
 		<br>
@@ -24,6 +38,14 @@
 		   th:text="${category.name}"
 		   style="margin-right: 10px;"></a>
 		
+<!--		   <ol class="category-001">-->
+<!--		       <li><a href="/recipes">全てのレシピ</a></li>-->
+<!--		       <li><a href="@{/recipes(categoryId=${category.id})}"-->
+<!--				      th:text="${category.name}"-->
+<!--				      style="margin-right: 10px;"></a></li>-->
+		       
+		   </ol>
+		   
 		<br><br>
 		<hr>
 		
@@ -31,13 +53,13 @@
 		
 		<p th:if="${#lists.isEmpty(recipes)}">レシピがまだありません。</p>
 		
+		
 		<div th:each="recipe : ${recipes}" style="margin-bottom: 15px;">
-			
-			
-			<a th:href="@{/recipes/detail/{id}(id=${recipe.id})}" 
-			   th:text="${recipe.name}" 
-			   style="font-size: 1.2em; font-weight: bold;">レシピ名</a>
-			   
+			<button class="button-1">
+			  <a th:href="@{/recipes/detail/{id}(id=${recipe.id})}" 
+			     th:text="${recipe.name}" 
+			     style="font-size: 1.2em; font-weight: bold;">レシピ名</a>
+			</button>
 		</div>
 
 	</main>
