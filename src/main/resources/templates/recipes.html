@@ -9,6 +9,10 @@
 <body>
 	
 	<header th:replace="~{header}"></header>
+	<span th:text="${@account.name}+'さんがログイン中'"></span>
+		<a href="/logout">ログアウト</a>
+		
+	<hr>
 	
 	<main>
 <!--		<form action="/recipes" method="get">-->
@@ -22,41 +26,34 @@
 		    </label>
 		    <button type="submit" aria-label="検索"></button>
 		</form>
-		
-<!--		<form>-->
-<!--		<a href="/recipes/add"><button type="button">レシピを投稿する</button></a>-->
-<!--		</form>-->
+				
 
         <form>
            <a href="/recipes/add"><button type="button" class="button-61">レシピを投稿する</button></a>
 		</form>
 		
 		<br>
+		
 		<a href="/recipes">全てのレシピ</a>  
 		<a th:each="category : ${categories}"
 		   th:href="@{/recipes(categoryId=${category.id})}"
 		   th:text="${category.name}"
 		   style="margin-right: 10px;"></a>
 		
+		
 <!--		   <div class="tab-3">-->
-<!--		       <label>-->
-<!--		           <input type="radio" name="tab-3" checked>-->
-<!--				   <a href="/recipes">全てのレシピ</a> -->
-<!--		       </label>-->
-<!--		       <div>-->
-<!--		       </div>-->
-
-<!--		       <label>-->
-<!--		           <input type="radio" name="tab-3">-->
-<!--				   <a th:each="category : ${categories}"-->
-<!--				   		   th:href="@{/recipes(categoryId=${category.id})}"-->
-<!--				   		   th:text="${category.name}"-->
-<!--				   		   style="margin-right: 10px;"></a>-->
-<!--		       </label>-->
+		       
+<!--				   <a th:href="@{/recipes}">全てのレシピ</a> -->
+		     
+<!--				   <span th:each="catName : ${categories}"th:remove="tag">-->
+				   
+<!--				   		   <a th:href="@{/recipes(categoryId=${category.id})}"-->
+<!--				   		   th:text="${category.name}">カテゴリー名</span>-->
+<!--		    </div>-->
 <!--		       <div></div>-->
 
 		<br><br>
-		<hr>
+	
 		
 		<h2>レシピ一覧</h2>
 		

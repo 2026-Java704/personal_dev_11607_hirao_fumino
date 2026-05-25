@@ -6,16 +6,25 @@
 <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-	<header>
-	<h1>レシピ投稿サイト</h1>
-	</header>
+	<header th:replace="~{header}"></header>
+	
+	<hr>
 	
 	<main>
 			<form action="/login" method="post">
 				<br> <span th:text="${message}" style="color: red"></span>
-				<br><input type="text" name="email" placeholder="メールアドレス">
-				<br><input type="text" name="password" placeholder="パスワード">
-				<br><button>ログイン</button>
+				<br><label>
+					<span class="textbox-4-label"></span>
+				    <input type="text" name="email" class="textbox-4" placeholder="メールアドレス"/>
+					</label>	
+					
+				<br><label>
+					<span class="textbox-5-label"></span>
+				    <input type="text" name="password"  class="textbox-5" placeholder="パスワード">
+				    </label>
+				
+				<br><button class="button-2">ログイン</button>
+				
 				
 			</form>
 			

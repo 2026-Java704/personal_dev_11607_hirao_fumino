@@ -7,10 +7,8 @@
 </head>
 <body>
 	
-	    <div class="addheader">
-		<h1><a href="/recipes">レシピ投稿サイト</a></h1>
-		</div>
-		<hr>
+	<header th:replace="~{header}"></header>
+			<hr>
 		
 		<main>
 			<br><h3>新規会員登録</h3>
@@ -20,18 +18,26 @@
 				<a th:if="${errorList}" class="error"> 
 					<a th:each="error:${errorList}" th:text="${error}"></a>
 				</a>
-				<br><input type="text" name="name" placeholder="名前">
-				<br><input type="text" name="email" placeholder="メールアドレス">
-				<br><input type="text" name="password" placeholder="パスワード">	
+				<br><label>
+					<span class="textbox-6-label"></span>
+					<input type="text" name="name" class="textbox-6" placeholder="名前">
+					</label>
+				<br><label>
+					<span class="textbox-7-label"></span>
+					<input type="text" name="email" class="textbox-7" placeholder="メールアドレス">
+					</label>
+				<br><label>
+					<span class="textbox-8-label"></span>
+					<input type="text" name="password" class="textbox-8" placeholder="パスワード">	
+					</label>
 				<br> <span th:text="${message}" style="color: red"></span>
 				
 			<br>
-			<button>登録</button>
+			<button class="button-2">登録</button>
 			
 			<br><a href="/login">キャンセル</a>
 			
 		    </form>
-			
 			
 		</main>
 

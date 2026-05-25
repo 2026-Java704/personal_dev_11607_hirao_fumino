@@ -7,6 +7,8 @@
 </head>
 <body>
 	<header th:replace="~{header}"></header>
+	<span th:text="${@account.name}+'さんがログイン中'"></span>
+			<a href="/logout">ログアウト</a>
 	<hr>
 	
 	<main>
@@ -19,22 +21,15 @@
 		    <input type="text" name="name" class="textbox-2" placeholder="レシピ名"/>
 		    </span>
 		</label>
-		
-<!--		<div>-->
-<!--		<select name="categoryId" id="category">-->
-<!--	    <option value="">カテゴリー選択</option>-->
-<!--		<option th:each="catgory : ${categories}" -->
-<!--		                        th:value="${category.id}" -->
-<!--		                        th:text="${category.name}"></option>-->
-<!--		</select>-->
-<!--		</div>-->
+	
 		
         <label class="selectbox-3">
             <select name="categoryId" id="category">
               <option value="">カテゴリー選択</option>
-              <option th:each="catgory : ${categories}"
+              <option th:each="category : ${categories}"
 			          th:value="${category.id}"
-					  th:text="${category.name}">
+					  th:text="${category.name}"
+					  th:selected="${recipe.category != null && category.id == recipe.category.id}">
 		      </option>
             </select>
         </label>

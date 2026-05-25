@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>レシピの編集</title>
+</head>
+<body>
+	<header th:replace="~{header}"></header>
+		<hr>
+		
+		<main>
+		<h2>レシピの編集</h2>
+
+		<form th:action="@{/recipes/edit/{id}(id=${recipe.id})}" method="post">
+			
+			<label>
+			    <span class="textbox-2-label">
+			    	<input type="text" name="name" th:value="${recipe.name}" class="textbox-2" placeholder="レシピ名"/>
+			    </span>
+			</label>
+			
+	        <label class="selectbox-3">
+	            <select name="categoryId" id="category">
+	              <option value="">カテゴリー選択</option>
+	              <option th:each="category : ${categories}"
+				          th:value="${category.id}"
+				          th:text="${category.name}"
+				          th:selected="${recipe.category != null && category.id == recipe.category.id}">
+			      </option>
+	            </select>
+	        </label>
+			
+			<label>
+			    <span class="textbox-2-label">
+			    	<textarea name="recipe" class="textbox-2" style="height: 200px;" placeholder="作り方・手順" th:text="${recipe.recipe}"></textarea>
+			    </span>
+			</label>
+			<br><br>
+			
+			<button type="submit" class="button-61" style="background: #4CAF50; width: 200px;">変更を保存する</button>
+			<br><br>
+			<a th:href="@{/recipes/detail/{id}(id=${recipe.id})}" style="color: #777;">キャンセル</a>
+				        
+		</form>
+
+	
+
+</body>
+</html>
