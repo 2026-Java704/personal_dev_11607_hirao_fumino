@@ -16,7 +16,9 @@ public class Recipe {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private Integer userId;
+	@ManyToOne
+	@JoinColumn(name = "user_id", insertable = false, updatable = false)
+	private User user;
 
 	private String name; //料理名
 
@@ -46,14 +48,6 @@ public class Recipe {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
 	public Category getCategory() {
 		return category;
 	}
@@ -76,6 +70,23 @@ public class Recipe {
 
 	public void setRecipe(String recipe) {
 		this.recipe = recipe;
+	}
+
+	//	public void setUser(User currentUser) {
+	// TODO 自動生成されたメソッド・スタブ
+
+	//	}
+
+	//	public Category getUser() {
+	// TODO 自動生成されたメソッド・スタブ
+	//		return null;
+	//	}
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

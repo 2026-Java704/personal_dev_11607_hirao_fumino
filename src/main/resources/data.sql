@@ -27,7 +27,7 @@ INSERT INTO categories(name) VALUES('その他');
 INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(1, 1, '親子丼', E'\n1. 鶏肉を一口大に切る \n 2. 玉ねぎを薄切りにする \n 3. フライパンに油を熱し、鶏肉と玉ねぎを炒める \n 4. 水と調味料を加えて煮る \n5 . 卵を溶いて加え、半熟になるまで煮る \n6. ご飯の上にのせて完成');
 INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(5, 3, 'マカロン', E'\n1. 卵白を泡立てる \n2. 粉砂糖とアーモンドプードルを混ぜる \n3. 卵白に粉砂糖とアーモンドプードルを加えて混ぜる \n4. 絞り袋に入れて天板に絞る \n5. 160度のオーブンで15分焼く \n6. 好みのクリームを挟んで完成');
 INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(4, 2, 'タラコパスタ', E'\n1. パスタを茹でる \n2. タラコをほぐす \n3. ボウルにバターorオリーブオイル、タラコを入れる \n4. 茹でたパスタを加えて、バターを溶かすように混ぜる \n5. 大葉かパセリをかけて \n6. お皿に盛り付けて完成');
-INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(1, 1, 'カツ丼', E'\n1. 豚肉に衣をつけて揚げる \n2. 玉ねぎを薄切りにする \n3. フライパンに油を熱し、玉ねぎを炒める \n4. 水と調味料を加えて煮る \n5. カツを加えて少し煮る　\n6.　卵を溶いて加え、半熟になるまで煮る \n7. ご飯の上にのせて完成');
+INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(1, 1, 'カツ丼', E'\n1. 豚肉に衣をつけて揚げる \n2. 玉ねぎを薄切りにする \n3. フライパンに油を熱し、玉ねぎを炒める \n4. 水と調味料を加えて煮る \n5. カツを加えて少し煮る \n6. 卵を溶いて加え、半熟になるまで煮る \n7. ご飯の上にのせて完成');
 INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(3, 2, 'カルボナーラ', E'\n1. パスタを茹でる \n2. グアンチャーレを細切りにする \n3. フライパンに油を熱し、鍋肌に焦げ付くようにグアンチャーレを炒める \n4. フライパンにお湯を加え、焦げを落とす \n5. 固めに茹でたパスタを加えて少し煮る \n6.水分がある程度飛んだら卵とチーズと粗目な黒コショウを混ぜたものを加えて混ぜる \n7. フライパンにお湯を加えながらちょうどいい濃度にする（固まらないように） \n8. お皿に盛り付けて完成');
 INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(2, 6, 'お味噌汁', E'\n1. 水を鍋に入れて火にかける \n2. だしの素を加える \n3. 好みの具材を入れる \n4. 沸騰したら火を止める \n5. 味噌を溶かして加える \n6. お椀に盛り付けて完成');
 INSERT INTO recipes(user_id, category_id, name, recipe) VALUES(6, 5, 'ラタトゥイユ', E'\n1. 玉ねぎ、にんじん、ズッキーニ、ナスを一口大に切る \n2. フライパンに油を熱し、玉ねぎとにんじんを炒める \n3. ズッキーニとナスを加えてさらに炒める \n4. トマト缶を加えて煮る \n5. 塩コショウで味を調える \n6. お皿に盛り付けて完成');

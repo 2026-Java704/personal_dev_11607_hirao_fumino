@@ -7,9 +7,13 @@
 </head>
 <body>
 	<header th:replace="~{header}"></header>
-	<span th:text="${@account.name}+'さんがログイン中'"></span>
-			<a href="/logout">ログアウト</a>
 	
+	
+	<span th:if="${@account.name != null}" th:text="${@account.name} + 'さんがログイン中'" style="margin-right: 15px; color: #333;"></span>
+	<button class="logout">	   
+	<a th:if="${@account.name != null}" href="/logout" >ログアウト</a>
+	</button>
+		   
 	  <main>
 		<form action="/recipes" class="search-form-3" method="get">
 			<label>
@@ -17,18 +21,18 @@
 			</label>
 			<button type="submit" aria-label="検索"></button>
 		</form>
-				
-		<form>
-		    <a href="/recipes/add"><button type="button" class="button-61">レシピを投稿する</button></a>
-		</form>
 		
 		<hr>
 		
-<!--		<h2 th:text="${recipe.name}"></h2>-->
-<!--		<a th:text="${@account.name}+'さんのレシピ'"></a>-->
-		
-		
-		
+		<h2 th:text="${recipe.name}"></h2>
+
+    <div th:if="${recipe.category != null}" >カテゴリー:
+    <span class="category-tag" th:text="${recipe.category.name}">カテゴリー名</span>
+     </div>
+	 
+	 <div th:if="${recipe.user != null}" style="margin: 10px 0; color: #666; font-size: 0.95em;">
+	     投稿者: <span th:text="${recipe.user.name}">投稿者名</span> さん
+	 </div>
 
 		<br><br>
 		<div class="box-009">
@@ -40,54 +44,16 @@
 		
 		<br>
 		
-		<table>
-	      <tr>
-		   <td>
+		<div class="detail-action-bar">
 		    <form th:action="@{/recipes/edit/{id}(id=${recipe.id})}" method="get">
-		    <button class="button-54">編集</button>
+		        <button type="submit" class="button-54">編集</button>
 		    </form>
-		   </td>
-		   <td>
-		    <form th:action="@{/recipes/{id}/detail(id=${recipe.id})}" method="post">
-		    <button class="button-55">削除</button>
+		    
+		    <form th:action="@{/recipes/{id}/delete(id=${recipe.id})}" method="post">
+		        <button type="submit" class="button-55">削除</button>
 		    </form>
-	        </td>
-	      </tr>
-		</table>
-		
-<!--		<p>レシピの編集</p>-->
+		</div>
 
-<!--			<form th:action="@{/recipes/edit/{id}(id=${recipe.id})}" method="post">-->
-				
-<!--				<label>-->
-<!--				    <span class="textbox-2-label">-->
-<!--				    	<input type="text" name="name" th:value="${recipe.name}" class="textbox-2" placeholder="レシピ名"/>-->
-<!--				    </span>-->
-<!--				</label>-->
-				
-<!--		        <label class="selectbox-3">-->
-<!--		            <select name="categoryId" id="category">-->
-<!--		              <option value="">カテゴリー選択</option>-->
-<!--		              <option th:each="category : ${categories}"-->
-<!--					          th:value="${category.id}"-->
-<!--					          th:text="${category.name}"-->
-<!--					          th:selected="${recipe.category != null && category.id == recipe.category.id}">-->
-<!--				      </option>-->
-<!--		            </select>-->
-<!--		        </label>-->
-				
-<!--				<label>-->
-<!--				    <span class="textbox-2-label">-->
-<!--				    	<textarea name="recipe" class="textbox-2" style="height: 200px;" placeholder="作り方・手順" th:text="${recipe.recipe}"></textarea>-->
-<!--				    </span>-->
-<!--				</label>-->
-<!--				<br><br>-->
-				
-<!--				<button type="submit" class="button-61" style="background: #4CAF50; width: 200px;">変更を保存する</button>-->
-<!--				<br><br>-->
-<!--				<a th:href="@{/recipes/detail/{id}(id=${recipe.id})}" style="color: #777;">キャンセル</a>-->
-					        
-<!--			</form>-->
 
 		<hr>
 					
@@ -98,85 +64,30 @@
 				まだコメントはありません。最初のコメントを書いてみませんか？
 			</p>
 			
-			<div th:unless="${#lists.isEmpty(comments)}">
-				<div th:each="comment : ${comments}" class="balloon-004" style="margin-bottom: 15px;">
-					<div style="text-align: left; font-size: 0.9em; color: #555; font-weight: bold; margin-bottom: 3px; padding-left: 15px;">
-						<span th:text="${comment.user.name}">ユーザー名</span> さん
-					</div>
-					<p th:text="${comment.content}">コメント内容</p>
-				</div>
-			</div>
-		</div>
-		
-		<div style="margin-top: 30px; text-align: left; background: #fffdf7; padding: 20px; border: 1px solid #ffe0b2; border-radius: 8px;">
-			<h4 style="margin-top: 0; color: #333;">コメントを投稿する</h4>
-			
-			<form id="commentForm" th:action="@{/recipes/detail/{id}/comment(id=${recipe.id})}" method="post">
-				<label>
-					<span class="textbox-2-label">
-						<textarea id="commentInput" name="content" class="textbox-2" style="height: 80px;" placeholder="美味しい工夫や感想を書いてね！"></textarea>
-					</span>
-				</label>
-				<br>
-				<button type="submit" class="button-61" style="width: 150px; height: 40px; font-size: 0.9em; margin-top: 10px;">
-					コメントを送る
-				</button>
+			<form th:action="@{/recipes/detail/{id}/comment(id=${recipe.id})}" method="post">
+			    <div style="text-align: left; margin: 20px 0;">
+			        <p style="font-weight: bold; margin-bottom: 5px;">コメントを残す</p>
+			        <textarea name="content" rows="3" style="width: 100%; max-width: 500px; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" placeholder="コメントを入力してください"></textarea>
+			        <br>
+			        <button type="submit" style="background-color: #fdb417; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; margin-top: 5px;">コメントを送信</button>
+			    </div>
 			</form>
-		</div>
 
-		<script>
-		document.getElementById('commentForm').addEventListener('submit', function(event) {
-			event.preventDefault(); 
-			
-			const inputArea = document.getElementById('commentInput');
-			const contentText = inputArea.value;
-			
-			// 空の場合
-			if (!contentText.trim()) return;
-			
-			const url = this.getAttribute('action');
-			const formData = new FormData();
-			formData.append('content', contentText);
-			
-			fetch(url, {
-				method: 'POST',
-				body: formData
-			})
-			.then(response => response.json())
-			.then(data => {
-				if (data.success) {
-					// コメントされたら「まだコメントはありません」を消す
-					const noMsg = document.getElementById('no-comment-msg');
-					if (noMsg) {
-						noMsg.remove();
-					}
-					
-					//そのままコメントを表示
-					const commentArea = document.getElementById('comment-area');
-					
-					const newCommentHtml = `
-						<div class="balloon-004" style="margin-bottom: 15px; animation: fadeIn 0.5s;">
-							<div style="text-align: left; font-size: 0.9em; color: #555; font-weight: bold; margin-bottom: 3px; padding-left: 15px;">
-								<span>${data.userName}</span> さん
-							</div>
-							<p>${data.content}</p>
-						</div>
-					`;
-					
-					commentArea.insertAdjacentHTML('beforeend', newCommentHtml);
-					
-					// 入力欄を空にして、次のコメントを書けるようにする
-					inputArea.value = '';
-				} else {
-					alert('コメントの送信に失敗しました。ログイン状態を確認してください。');
-				}
-			})
-			.catch(error => {
-				console.error('Error:', error);
-				alert('通信エラーが発生しました。');
-			});
-		});
-		</script>
+			<hr>
+
+			<div id="comment-area" style="margin-top: 20px;">
+			    <h3 style="text-align: left;">コメント一覧</h3>
+			    
+			    <p th:if="${#lists.isEmpty(commentList)}" style="color: #888; text-align: left;">まだコメントはありません。</p>
+			    
+			    <div th:each="comment : ${commentList}" class="balloon-004" style="margin-bottom: 15px;">
+			        <div style="text-align: left; font-size: 0.9em; color: #555; font-weight: bold; margin-bottom: 3px;">
+			            <span th:text="${comment.user != null ? comment.user.name : '名無し'}">ユーザー名</span> さん:
+			        </div>
+			        <p th:text="${comment.content}" style="text-align: left; margin: 0;"></p>
+			    </div>
+			</div>
+
 		
 		<style>
 		@keyframes fadeIn {

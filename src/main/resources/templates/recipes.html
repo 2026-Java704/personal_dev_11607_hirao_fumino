@@ -9,16 +9,17 @@
 <body>
 	
 	<header th:replace="~{header}"></header>
-	<span th:text="${@account.name}+'さんがログイン中'"></span>
-		<a href="/logout">ログアウト</a>
 		
-	<hr>
 	
-	<main>
-<!--		<form action="/recipes" method="get">-->
-<!--			<input type="text" name="keyword" th:value="${keyword}" placeholder="キーワードを入力">-->
-<!--			<button type="submit">検索</button>-->
-<!--		</form>-->
+	<span th:if="${@account.name != null}" th:text="${@account.name} + 'さんがログイン中'" style="margin-right: 15px; color: #333;"></span>
+	  
+	 <button class="logout">
+	   <a th:if="${@account.name != null}" href="/logout" >ログアウト</a>
+	   </button>
+<!--	<hr color="#ffba24">-->
+	
+	<br>
+		
 		
 		<form action="/recipes" class="search-form-3" method="get">
 		    <label>
@@ -26,47 +27,44 @@
 		    </label>
 		    <button type="submit" aria-label="検索"></button>
 		</form>
-				
-
-        <form>
-           <a href="/recipes/add"><button type="button" class="button-61">レシピを投稿する</button></a>
-		</form>
+		
 		
 		<br>
-		
-		<a href="/recipes">全てのレシピ</a>  
-		<a th:each="category : ${categories}"
-		   th:href="@{/recipes(categoryId=${category.id})}"
-		   th:text="${category.name}"
-		   style="margin-right: 10px;"></a>
-		
-		
-<!--		   <div class="tab-3">-->
-		       
-<!--				   <a th:href="@{/recipes}">全てのレシピ</a> -->
-		     
-<!--				   <span th:each="catName : ${categories}"th:remove="tag">-->
-				   
-<!--				   		   <a th:href="@{/recipes(categoryId=${category.id})}"-->
-<!--				   		   th:text="${category.name}">カテゴリー名</span>-->
-<!--		    </div>-->
-<!--		       <div></div>-->
+		<h2 class="heading-2">レシピ一覧</h2>
+
+                <a th:href="@{/recipes}" 
+                 th:classappend="${param.categoryId == null} ? 'category-tab active' : 'category-tab'">すべて
+                </a>  
+
+                <a th:each="category : ${categories}"
+                 th:href="@{/recipes(categoryId=${category.id})}"
+                 th:text="${category.name}"
+                 th:classappend="${param.categoryId != null && param.categoryId[0] == #strings.toString(category.id)} ? 'category-tab active' : 'category-tab'">
+                </a>
+
 
 		<br><br>
 	
 		
-		<h2>レシピ一覧</h2>
+		
 		
 		<p th:if="${#lists.isEmpty(recipes)}">レシピがまだありません。</p>
 		
-		
+		<div class="recipe-grid" th:if="${!#lists.isEmpty(recipes)}">
 		<div th:each="recipe : ${recipes}" style="margin-bottom: 15px;">
 			<button class="button-1">
 			  <a th:href="@{/recipes/detail/{id}(id=${recipe.id})}" 
-			     th:text="${recipe.name}" 
-			     style="font-size: 1.2em; font-weight: bold;">レシピ名</a>
+			     th:text="${recipe.name}" >レシピ名</a>
 			</button>
 		</div>
+		</div>
+		
+		<br></br>
+		<form>
+		          <button type="button" class="button-61"><a href="/recipes/add">レシピを投稿する</a></button>
+			</form>
+			
+		<br></br>
 
 	</main>
 	<hr>

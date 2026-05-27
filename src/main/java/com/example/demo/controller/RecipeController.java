@@ -1,22 +1,21 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Recipe;
 import com.example.demo.entity.User;
+import com.example.demo.model.Account;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.RecipeRepository;
@@ -29,13 +28,16 @@ public class RecipeController {
 	private final RecipeRepository recipeRepository;
 	private final UserRepository userRepository;
 	private final CommentRepository commentRepository;
-	private User account;
+
+	@Autowired
+	private Account account;
 
 	public RecipeController(
 			CategoryRepository categoryRepository,
 			RecipeRepository recipeRepository,
 			UserRepository userRepository,
 			CommentRepository commentRepository) {
+
 		this.categoryRepository = categoryRepository;
 		this.recipeRepository = recipeRepository;
 		this.userRepository = userRepository;
@@ -77,8 +79,10 @@ public class RecipeController {
 	//レシピ詳細画面を表示
 	@GetMapping("/recipes/detail/{id}")
 	public String detail(@PathVariable Integer id, Model model) {
-		// 主キー検索 (.get() の代わりに安全な orElse(null) を使用)
+
+		// 主キー検索 
 		Recipe recipe = recipeRepository.findById(id).orElse(null);
+
 		if (recipe == null) {
 			return "redirect:/recipes";
 		}
@@ -86,7 +90,7 @@ public class RecipeController {
 
 		// このレシピのコメント一覧を表示
 		List<Comment> commentList = commentRepository.findByRecipeIdOrderByIdAsc(id);
-		model.addAttribute("comments", commentList);
+		model.addAttribute("commentList", commentList);
 
 		// ログイン中のユーザー情報を取得
 		Integer loggedInUserId = null;
@@ -103,83 +107,110 @@ public class RecipeController {
 		return "recipesDetail";
 	}
 
-	//レシピ詳細画面でコメントをする
+	// コメント投稿
 	@PostMapping("/recipes/detail/{id}/comment")
-	@ResponseBody // 画面遷移せず、データ（JSON）だけをブラウザに返す魔法のタグ
-	public Map<String, Object> addComment(
+	public String addComment(
 			@PathVariable Integer id,
 			@RequestParam String content) {
 
-		Map<String, Object> response = new HashMap<>();
-		response.put("success", false);
-
-		// コメントが空っぽじゃなければ保存処理をする
-		if (content != null && content.trim().length() > 0) {
-			if (account != null && account.getEmail() != null) {
-				List<User> loggedInUser = userRepository.findByEmail(account.getEmail());
-				if (loggedInUser != null && !loggedInUser.isEmpty()) {
-					User currentUser = loggedInUser.get(0);
-
-					// データベースに保存
-					Comment comment = new Comment(id, currentUser, content);
-					commentRepository.save(comment);
-
-					// HTML側（JavaScript）に「投稿者の名前」と「内容」を即座に返す
-					response.put("success", true);
-					response.put("userName", currentUser.getName());
-					response.put("content", content);
-				}
-			}
+		// 1. ログインチェック
+		if (account == null || account.getEmail() == null) {
+			return "redirect:/login";
 		}
-		return response;
+
+		// 空っぽのコメントは保存しない
+		if (content == null || content.trim().isEmpty()) {
+			return "redirect:/recipes/detail/" + id;
+		}
+
+		// 2. ログインしているユーザーの情報をデータベースから特定
+		List<User> userList = userRepository.findByEmail(account.getEmail());
+		if (userList == null || userList.isEmpty()) {
+			return "redirect:/login";
+		}
+		User currentUser = userList.get(0);
+
+		// 3. コメントデータを作って、リポジトリで保存する
+		Comment comment = new Comment();
+		comment.setRecipeId(id);
+		comment.setUser(currentUser);
+		comment.setContent(content);
+
+		commentRepository.save(comment);
+
+		return "redirect:/recipes/detail/" + id;
 	}
 
-	//レシピ編集画面を表示
-	@GetMapping("/recipes/edit/{id}/")
-	public String editForm(@PathVariable Integer id, Model model) {
-		Recipe recipe = recipeRepository.findById(id).orElse(null);
+	// 編集画面表示
+	@GetMapping("/recipes/edit/{id}")
+	public String edit(@PathVariable Integer id, Model model) {
 
-		//投稿者以外は一覧画面にリダイレクト
-		if (recipe == null || account == null || account.getEmail() == null) {
-			return "redirect:/recipes";
-		}
-		List<User> loggedInUser = userRepository.findByEmail(account.getEmail());
-		if (loggedInUser.isEmpty() || !recipe.getUserId().equals(loggedInUser.get(0).getId())) {
-			return "redirect:/recipes";
-		}
+		// 未ログインならログイン画面へ
+		//		if (account.getId() == null) {
+		//			return "login";
+		//		}
+
+		Recipe recipe = recipeRepository.findById(id).get();
+		List<Category> categories = categoryRepository.findAll();
+
+		// 投稿者とログインユーザーが一致しない場合は一覧に弾く
+		//		if (!recipe.getUser().getId().equals(account.getId())) {
+		//			return "redirect:/recipes";
+		//		}
 
 		model.addAttribute("recipe", recipe);
-		List<Category> categoryList = categoryRepository.findAll();
-		model.addAttribute("categories", categoryList);
+		model.addAttribute("categories", categories);
 
 		return "recipesEdit";
 	}
 
-	//編集したレシピを更新
-	@PostMapping("/recipes/edit/{id}/")
+	// レシピの更新処理
+	@PostMapping("/recipes/edit/{id}")
 	public String update(
 			@PathVariable Integer id,
-			@RequestParam String name,
-			@RequestParam String recipe,
-			@RequestParam(required = false) Integer categoryId) {
+			@RequestParam Integer categoryId,
+			@RequestParam(defaultValue = "") String name,
+			@RequestParam(defaultValue = "") String recipe) {
 
-		Recipe existingRecipe = recipeRepository.findById(id).orElse(null);
-		if (existingRecipe != null) {
-			existingRecipe.setName(name);
-			existingRecipe.setRecipe(recipe);
+		//  未ログインチェック
+		//		if (account.getId() == null) {
+		//			return "login";
+		//		}
 
-			if (categoryId != null) {
-				Category category = categoryRepository.findById(categoryId).orElse(null);
-				existingRecipe.setCategory(category);
-			}
-			recipeRepository.save(existingRecipe);
-		}
-		return "redirect:/recipes/detail/" + id;
+		Recipe updateRecipe = recipeRepository.findById(id).get();
+
+		//  投稿者チェック
+		//		if (!updateRecipe.getUser().getId().equals(account.getId())) {
+		//			return "redirect:/recipes";
+		//		}
+
+		Category category = categoryRepository.findById(categoryId).get();
+
+		updateRecipe.setName(name);
+		updateRecipe.setRecipe(recipe);
+		updateRecipe.setCategory(category);
+
+		recipeRepository.save(updateRecipe);
+
+		return "redirect:/recipes";
 	}
 
-	//レシピを削除
+	// レシピを削除
 	@PostMapping("/recipes/{id}/delete")
 	public String delete(@PathVariable Integer id) {
+
+		// 1. 未ログインチェック
+		//		if (account.getId() == null) {
+		//			return "login";
+		//		}
+
+		Recipe recipe = recipeRepository.findById(id).get();
+
+		// 2. 投稿者チェック
+		//		if (!recipe.getUser().getId().equals(account.getId())) {
+		//			return "redirect:/recipes";
+		//		}
+
 		recipeRepository.deleteById(id);
 
 		return "redirect:/recipes";
@@ -187,7 +218,10 @@ public class RecipeController {
 
 	//レシピ投稿画面を表示
 	@GetMapping("/recipes/add")
-	public String create() {
+	public String create(Model model) {
+
+		List<Category> categories = categoryRepository.findAll();
+		model.addAttribute("categories", categories);
 		return "recipesAdd";
 	}
 
@@ -196,6 +230,7 @@ public class RecipeController {
 	public String add(
 			@RequestParam String name,
 			@RequestParam String recipe,
+			@RequestParam(required = false) Integer categoryId,
 			Model model) {
 
 		List<String> errorList = new ArrayList<>();
@@ -209,6 +244,10 @@ public class RecipeController {
 			errorList.add("作り方を入力して下さい");
 		}
 		if (errorList.size() > 0) {
+
+			List<Category> categories = categoryRepository.findAll();
+			model.addAttribute("categories", categories);
+
 			model.addAttribute("errorList", errorList);
 			model.addAttribute("name", name);
 			model.addAttribute("recipe", recipe);
@@ -219,6 +258,24 @@ public class RecipeController {
 
 		recipes.setName(recipes.getName());
 		recipes.setRecipe(recipes.getRecipe());
+
+		// 選択されたカテゴリーIDをセット
+		if (categoryId != null) {
+			Category category = categoryRepository.findById(categoryId).orElse(null);
+			recipes.setCategory(category);
+		}
+
+		// ログイン中のユーザー情報をレシピにセットする
+		if (account != null && account.getEmail() != null) {
+			List<User> loggedInUser = userRepository.findByEmail(account.getEmail());
+			if (loggedInUser != null && !loggedInUser.isEmpty()) {
+
+				User currentUser = loggedInUser.get(0);
+
+				recipes.setUser(currentUser);
+
+			}
+		}
 
 		recipeRepository.save(recipes);
 

@@ -7,14 +7,17 @@
 </head>
 <body>
 	<header th:replace="~{header}"></header>
-	<span th:text="${@account.name}+'さんがログイン中'"></span>
-			<a href="/logout">ログアウト</a>
-	<hr>
+	
+	
+	<span th:if="${@account.name != null}" th:text="${@account.name} + 'さんがログイン中'" style="margin-right: 15px; color: #333;"></span>
+	<button class="logout">	   
+	<a th:if="${@account.name != null}" href="/logout" >ログアウト</a>
+	</button>
+	
+		   <hr>
 	
 	<main>
 	<form action="/recipes/add" th:object="${recipe}" method="post">
-		
-<!--		<input type="text" name="name" placeholder="レシピ名"><br>-->
 		
 		<label>
 		    <span class="textbox-2-label">
@@ -22,27 +25,22 @@
 		    </span>
 		</label>
 	
+		<label class="selectbox-3">
+		    <select name="categoryId" id="category">
+		        <option value="">カテゴリー選択</option>
+		        <option th:each="category : ${categories}"
+		                th:value="${category.id}"
+		                th:text="${category.name}"
+		                th:selected="${category.id == selectedCategoryId}"></option>
+		    </select>
+		</label>
 		
-        <label class="selectbox-3">
-            <select name="categoryId" id="category">
-              <option value="">カテゴリー選択</option>
-              <option th:each="category : ${categories}"
-			          th:value="${category.id}"
-					  th:text="${category.name}"
-					  th:selected="${recipe.category != null && category.id == recipe.category.id}">
-		      </option>
-            </select>
-        </label>
-		
-<!--		<br><textarea name="recipe" placeholder="作り方"></textarea><br>-->
 		
 		<label>
 		    <span class="textbox-2-label">
 		    <textarea name="recipe" class="textbox-2" placeholder="作り方・手順"></textarea>
 		    </span>
 		</label>
-		
-<!--	    <button type="submit">レシピを投稿する</button><br>-->
 		
 		<button type="submit" class="button-61">レシピを投稿する</button>
 		
